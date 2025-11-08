@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+   name: "light";
+  default: true;
+  --color-primary: #F97316;
+  --color-secondary: #1E293B;
+  --color-accent: #FEF3C7;
+  --color-white: #FFFFFF;
+  --color-black: #111827
+}
+*{
+    font-family: "Sora", sans-serif;
+
+}
+.navbar .menu a.active{
+  border-bottom: 2px solid #F97316;
+}
