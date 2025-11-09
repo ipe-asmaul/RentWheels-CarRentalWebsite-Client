@@ -7,6 +7,7 @@ import Register from "../pages/Register";
 import AddCar from "../pages/AddCar";
 import MyListing from "../pages/MyListing";
 import MyBookings from "../pages/MyBookings";
+import AllCars from "../pages/AllCars";
 
 const routes = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ const routes = createBrowserRouter([
         {
           index:true,
           Component: Home,
+        },
+        {
+          path: '/cars',
+          Component: AllCars
         },
         {
           path:'/login',
