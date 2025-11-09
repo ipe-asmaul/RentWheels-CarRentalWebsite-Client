@@ -4,6 +4,9 @@ import ErrorPage from "../pages/ErrorPage";
 import Root from '../Layouts/Root'
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import AddCar from "../pages/AddCar";
+import MyListing from "../pages/MyListing";
+import MyBookings from "../pages/MyBookings";
 
 const routes = createBrowserRouter([
     {
@@ -23,6 +26,18 @@ const routes = createBrowserRouter([
         path: '/register',
         Component: Register
         },
+        {
+          path:'/addcar',
+          Component: AddCar
+        },
+        {
+          path:'/listing',
+          Component: MyListing
+        },
+        {
+          path:'/bookings',
+          Component: MyBookings
+        }
         
       ]
     }

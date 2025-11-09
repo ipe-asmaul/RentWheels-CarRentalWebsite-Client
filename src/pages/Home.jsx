@@ -23,12 +23,12 @@ import BrandCarousel from '../components/BrandCarousel';
 const Home = () => {
     return (
         <div>
-            <div className=' bg-linear-to-r from-orange-50 via-white to-white '>
+            <div className=' bg-linear-to-r from-orange-50 via-white to-white mt-4'>
                 <CarouselSlide />
             </div>
             <div className="our-partners text-center space-y-12  p-20 bg-secondary">
                 <h2 className='text-5xl font-bold'><span className='text-accent'>Our</span> <span className="text-primary">Partners</span></h2>
-                <BrandCarousel/>
+                <BrandCarousel />
             </div>
 
             <div className="product-cards-featured w-9/10 md:w-7/10 lg:w-6/10 mx-auto container">
@@ -99,11 +99,11 @@ const Home = () => {
 
             <section className="confused w-full h-fit p-10">
                 <div className="content container flex md:flex-row-reverse flex-col items-center justify-around bg-radial-[at_25%_55%] p-10 rounded-4xl  from-primary to-orange-100 via-orange-200 backdrop-blur-3xl">
-                    <div className="img hidden md:block"><img src={callCar} alt="" className='h-90 w-110 aspect-4/3'/></div>
+                    <div className="img hidden md:block"><img src={callCar} alt="" className='h-90 w-110 aspect-4/3' /></div>
                     <div className="text-content space-y-4">
                         <h2 className="text-5xl font-bold text-secondary">Still Confused!</h2>
                         <p className="text-black text-xl">Call us right now</p>
-                        <button className="btn btn-primary">Call Now <FaPhone/></button>
+                        <button className="btn btn-primary">Call Now <FaPhone /></button>
                     </div>
                 </div>
             </section>

@@ -25,13 +25,13 @@ const BrandCarousel = () => {
     return (
         <div className="slider-container">
             <Slider {...settings}>
-                <div className="text-5xl mx-3  md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiFord /></div>
-                <div className="text-5xl mx-3 md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiTesla /></div>
-                <div className="text-5xl mx-3 md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiAudi /></div>
-                <div className="text-5xl mx-3 md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiVolkswagen /></div>
-                <div className="text-5xl mx-3 md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiHonda /></div>
-                <div className="text-5xl mx-3 md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiNissan /></div>
-                <div className="text-5xl mx-3 md:text-6xl lg:text-8xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiToyota /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiTesla /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiFord /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiAudi /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiVolkswagen /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiHonda /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiNissan /></div>
+                <div className="text-5xl mx-3 md:text-6xl lg:text-9xl text-accent hover:text-primary opacity-75 hover:opacity-100"><SiToyota /></div>
             </Slider>
         </div>
     );

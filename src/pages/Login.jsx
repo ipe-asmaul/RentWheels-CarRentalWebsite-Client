@@ -33,7 +33,7 @@ const Login = () => {
                                     <div className='relative'>
                                         <input type={passwordShow ? 'text' : 'password'} className="input" placeholder="Password" name='password' required />
                                         <span className='text-xl -ml-7 absolute top-2' onClick={handlePasswordShow}>{passwordShow ? <FaRegEyeSlash /> : <FaRegEye />}</span>
-                                    </div>                                    <div><Link className="link link-hover" to='/forgetpassword'>Forgot password?</Link></div>
+                                    </div>                                 
                                     <button className="btn btn-primary mt-4">  Login</button>
                                 </fieldset>
 
