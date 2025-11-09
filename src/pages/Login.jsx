@@ -9,7 +9,21 @@ const Login = () => {
     const { userLogin, signInWithGoogle,setLoading } = useContext(Context)
     const [passwordShow, setPasswordShow] = useState(false)
     const handleGoogleSignIn = () => {
-        signInWithGoogle().then(result => { console.log(result.user); setLoading(false) }).catch(err => console.log(err))
+        signInWithGoogle().then(result => { 
+            console.log(result.user); 
+            setLoading(false); 
+            fetch('http://localhost:3000/user',{
+                method:'POST',
+                headers: { 'content-type' : 'application/json'},
+                body: JSON.stringify({name:result.user.displayName,email: result.user.email})
+
+            })
+            .then(result => result.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+
+
+         }).catch(err => console.log(err))
 
     }
     const handleLogin = (e) => {

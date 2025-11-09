@@ -10,6 +10,7 @@ import MyBookings from "../pages/MyBookings";
 import AllCars from "../pages/AllCars";
 import CarDetails from "../pages/CarDetails";
 import App from "../App";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 const routes = createBrowserRouter([
     {
@@ -23,7 +24,9 @@ const routes = createBrowserRouter([
         },
         {
           path: '/cars',
-          Component: AllCars
+          Component: AllCars,
+          loader: ()=> fetch('http://localhost:3000/cars'),
+          hydrateFallbackElement: <LoadingAnimation/>
         },
         {
          path:'/details',
@@ -43,7 +46,8 @@ const routes = createBrowserRouter([
         },
         {
           path:'/listing',
-          Component: MyListing
+          Component: MyListing,
+        
         },
         {
           path:'/bookings',

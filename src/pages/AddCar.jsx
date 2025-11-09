@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../auth/AuthContext';
+import Swal from 'sweetalert2';
 
 const AddCar = () => {
+    const { user } = useContext(Context)
+    console.log(user)
+    const handleAddCar = (e) => {
+        e.preventDefault();
+        const carName = e.target.name.value;
+        const description = e.target.description.value;
+        const rent = e.target.rent.value;
+        const location = e.target.location.value;
+        const photo = e.target.url.value;
+        const category = e.target.category.value;
+        const userName = user.displayName;
+        const email = user.email;
+        const carObj = { carName, description, rent, location, photo, category,isBooked: false, userName, email }
+
+        fetch('http://localhost:3000/addcar', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(carObj)
+        })
+            .then(result => result.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Data Added",
+                        text: "Successfully inserted data to database!",
+                    });
+                    e.target.reset()
+                }
+            })
+            .catch(err => console.log(err))
+
+    }
     return (
         <div>
             <div className="add-car flex w-full flex-col items-center justify-center bg-linear-to-bl from-orange-100 to-white p-15">
                 <h3 className="text-3xl font-bold text-secondary mb-6">Add New Car</h3>
-                <form className=' w-fit h-fit p-10 border-2 border-primary space-y-2.5 rounded-xl shadow-2xl'>
+                <form className=' w-fit h-fit p-10 border-2 border-primary space-y-2.5 rounded-xl shadow-2xl' onSubmit={handleAddCar}>
                     <div className="name">
 
                         <fieldset className="fieldset">
@@ -22,7 +59,7 @@ const AddCar = () => {
                     <div className="category">
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Category</legend>
-                            <select defaultValue="Pick a browser" className="select">
+                            <select defaultValue="Pick a browser" className="select" name='category'>
                                 <option disabled={true}>Pick a Car Model</option>
                                 <option>Sedan</option>
                                 <option>SUV</option>
@@ -64,6 +101,7 @@ const AddCar = () => {
                                 type="url"
                                 required
                                 placeholder="Enter Image Url"
+                                name='url'
 
                             />
                         </label>
@@ -87,7 +125,7 @@ const AddCar = () => {
                                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                                     </g>
                                 </svg>
-                                <input type="email" defaultValue="mail@site.com" required readOnly />
+                                <input type="email" defaultValue={user?.email} required readOnly />
                             </label>
                         </div>
                         <div className="name">
@@ -106,7 +144,7 @@ const AddCar = () => {
                                 </svg>
                                 <input
                                     type="text"
-                                    defaultValue={'Jhon Doe'}
+                                    defaultValue={user?.displayName}
                                     readOnly
                                 />
                             </label>
