@@ -6,7 +6,7 @@ import { Context } from '../auth/AuthContext';
 
 
 const Login = () => {
-    const { userLogin, signInWithGoogle } = useContext(Context)
+    const { userLogin, signInWithGoogle,setLoading } = useContext(Context)
     const [passwordShow, setPasswordShow] = useState(false)
     const handleGoogleSignIn = () => {
         signInWithGoogle().then(result => { console.log(result.user); setLoading(false) }).catch(err => console.log(err))
