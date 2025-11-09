@@ -1,6 +1,6 @@
 import React from 'react';
 import { GiCarWheel } from "react-icons/gi";
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 
 const Navbar = () => {
@@ -39,7 +39,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end space-x-2">
-                    <a className="btn btn-primary">Login</a>
+                    <Link className="btn btn-primary cursor-pointer"  to={'/login'}>Login</Link>
                     {/* --start of profile-Icon */}
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

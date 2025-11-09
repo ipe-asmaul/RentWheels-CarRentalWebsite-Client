@@ -6,7 +6,7 @@ import { Fade, Slide } from 'react-awesome-reveal';
 const CarouselSlide = () => {
     return (
         <div>
-            <div className="slide-content flex flex-col-reverse md:flex-row justify-between items-center w-9/10 mx-auto container h-[500px] mb-5">
+            <div className="slide-content flex flex-col-reverse md:flex-row justify-between items-center w-9/10 mx-auto container h-[500px] py-5">
                 
                     <div className="text-content">
                         <Fade cascade duration={1500}>
