@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { GiCarWheel } from "react-icons/gi";
 import { Link, NavLink } from 'react-router';
+import { Context } from '../auth/AuthContext';
 
 
 const Navbar = () => {
+    const { user, loading, logOut } = useContext(Context)
+    console.log(user)
+    const handleLogOut = () => {
+        logOut().then(() => console.log('Logged Out')).catch(err => console.log(err))
+    }
     return (
         <div>
             <div className="navbar container mx-auto">
@@ -15,52 +21,70 @@ const Navbar = () => {
                         <ul
                             tabIndex="-1"
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <li><a>Item 1</a></li>
-                            <li>
-                                <a>Parent</a>
-                                <ul className="p-2">
-                                    <li><a>Submenu 1</a></li>
-                                    <li><a>Submenu 2</a></li>
-                                </ul>
-                            </li>
-                            <li><a>Item 3</a></li>
+                            <NavLink to={'/'}>Home</NavLink>
+                            <NavLink to={'/cars'}>Browse Cars</NavLink>
+                            {
+
+                                user &&
+                                <>
+                                    <NavLink to={'/addcar'}>Add Car</NavLink>
+                                    <NavLink to={'/listing'}>My Listing</NavLink>
+                                    <NavLink to={'/bookings'}>My Bookings</NavLink>
+                                </>
+
+
+                            }
+
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl"><span className='text-primary'>Rent</span> Wh<span className='flex color-accent'><GiCarWheel/><GiCarWheel/></span>L</a>
+                    <a className="btn btn-ghost text-xl"><span className='text-primary'>Rent</span> Wh<span className='flex color-accent'><GiCarWheel /><GiCarWheel /></span>L</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 space-x-4">
                         <NavLink to={'/'}>Home</NavLink>
                         <NavLink to={'/cars'}>Browse Cars</NavLink>
-                        <NavLink to={'/addcar'}>Add Car</NavLink>
-                        <NavLink to={'/listing'}>My Listing</NavLink>
-                        <NavLink to={'/bookings'}>My Bookings</NavLink>
+                        {user &&
+                            <>
+                                <NavLink to={'/addcar'}>Add Car</NavLink>
+                                <NavLink to={'/listing'}>My Listing</NavLink>
+                                <NavLink to={'/bookings'}>My Bookings</NavLink>
+                            </>
+                        }
 
                     </ul>
                 </div>
                 <div className="navbar-end space-x-2">
-                    <Link className="btn btn-primary cursor-pointer"  to={'/login'}>Login</Link>
-                    {/* --start of profile-Icon */}
-                    <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    {
+                        !loading ? user ? <> {/* --start of profile-Icon */}
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img
+                                            alt="Tailwind CSS Navbar component"
+                                            src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex="-1"
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                                    <li>
+                                        <a className="justify-between">
+                                            {user.displayName}
+                                        </a>
+                                        <a className="justify-between">
+                                            {user.email}
+                                        </a>
+                                    </li>
+                                    <li onClick={handleLogOut}><a>Logout</a></li>
+                                </ul>
                             </div>
-                        </div>
-                        <ul
-                            tabIndex="-1"
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <li>
-                                <a className="justify-between">
-                                    Profile
-                                </a>
-                            </li>
-                            <li><a>Logout</a></li>
-                        </ul>
-                    </div>
-                    {/* ---End Of Profile Icon */}
+                            {/* ---End Of Profile Icon */}
+                        </>
+                            : <Link className="btn btn-primary cursor-pointer" to={'/login'}>Login</Link>
+                            : <span className="loading loading-spinner text-accent"></span>
+
+                    }
+
                 </div>
             </div>
         </div>

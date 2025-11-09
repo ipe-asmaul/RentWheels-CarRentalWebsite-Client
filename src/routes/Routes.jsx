@@ -9,6 +9,7 @@ import MyListing from "../pages/MyListing";
 import MyBookings from "../pages/MyBookings";
 import AllCars from "../pages/AllCars";
 import CarDetails from "../pages/CarDetails";
+import App from "../App";
 
 const routes = createBrowserRouter([
     {
@@ -50,6 +51,14 @@ const routes = createBrowserRouter([
         }
         
       ]
+    },
+    {
+      path:'/test',
+      Component: App
+    },
+    {
+      path:'*',
+      Component: ErrorPage
     }
 ])
 

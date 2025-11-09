@@ -1,24 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router';
+import { Context } from '../auth/AuthContext';
 
 const Register = () => {
-       const [passwordShow, setPasswordShow] = useState(false)
+    const {signInWithGoogle,setUser, setLoading, userRegistration, userUpdate} = useContext(Context)
+    //console.log(context)
+    const [passwordShow, setPasswordShow] = useState(false)
 
-    const handleGoogleSignIn = () =>{
+    const handleGoogleSignIn = () => {
+           signInWithGoogle().then(result => {console.log(result.user); setLoading(false)}).catch(err => console.log(err))
+    }
+    const handleRegister = (e) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const photo = e.target.url.value;
+        userRegistration(email,password)
+        .then(data =>{
+            setUser({...data.user, displayName:name,photoURL:photo})
+           userUpdate(name,photo)
+           .then(() => setLoading(false))
+           .catch(err => console.log(err))
+        })
 
     }
-    const handleRegister = (e) =>{
-     console.log(e.target)
-    }
-    const handlePasswordShow = () =>{
-                setPasswordShow(!passwordShow)
+    const handlePasswordShow = () => {
+        setPasswordShow(!passwordShow)
 
     }
     return (
         <div>
-                        <title>Register - Rent WHeel</title>
+            <title>Register - Rent WHeel</title>
             <div className="hero bg-linear-to-bl from-orange-100 to-white p-15">
                 <div className="hero-content flex-col">
                     <div className="text-center lg:text-left">
@@ -29,14 +44,14 @@ const Register = () => {
                             <form onSubmit={handleRegister}>
                                 <fieldset className="fieldset">
                                     <label className="label">Name</label>
-                                    <input type="text" className="input" placeholder="Enter Your Name" name='name' required/>
+                                    <input type="text" className="input" placeholder="Enter Your Name" name='name' required />
                                     <label className="label">Photo URL</label>
-                                    <input type="text" className="input" placeholder="Enter Your Photo URL" name='url' required/>
+                                    <input type="text" className="input" placeholder="Enter Your Photo URL" name='url' required />
                                     <label className="label">Email</label>
-                                    <input type="email" className="input" placeholder="Email" name='email' required/>
+                                    <input type="email" className="input" placeholder="Email" name='email' required />
                                     <label className="label">Password</label>
                                     <div className='relative'>
-                                        <input type={passwordShow ? 'text' : 'password'} className="input" placeholder="Password" name='password' required/>
+                                        <input type={passwordShow ? 'text' : 'password'} className="input" placeholder="Password" name='password' required />
                                         <span className='text-xl -ml-7 absolute top-2' onClick={handlePasswordShow}>{passwordShow ? <FaRegEyeSlash /> : <FaRegEye />}</span>
                                     </div>
 
@@ -47,7 +62,7 @@ const Register = () => {
                                             <li>Minimum 6 Characters</li>
                                         </ul>
                                     </a></div>} */}
-                                    
+
                                     <button className="btn btn-primary mt-4"> Register</button>
 
                                 </fieldset>

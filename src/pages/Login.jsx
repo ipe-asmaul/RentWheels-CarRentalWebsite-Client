@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Link } from 'react-router';
+import { Context } from '../auth/AuthContext';
 
 
 const Login = () => {
+    const { userLogin, signInWithGoogle } = useContext(Context)
     const [passwordShow, setPasswordShow] = useState(false)
-    const handleGoogleSignIn = () =>{
+    const handleGoogleSignIn = () => {
+        signInWithGoogle().then(result => { console.log(result.user); setLoading(false) }).catch(err => console.log(err))
 
     }
-    const handleLogin = () =>{
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        userLogin(email, password)
+            .then(data => { console.log(data) })
+            .catch(err => console.log(err.message))
 
     }
-        const handlePasswordShow = () => {
+    const handlePasswordShow = () => {
         setPasswordShow(!passwordShow)
     }
     return (
@@ -33,7 +42,7 @@ const Login = () => {
                                     <div className='relative'>
                                         <input type={passwordShow ? 'text' : 'password'} className="input" placeholder="Password" name='password' required />
                                         <span className='text-xl -ml-7 absolute top-2' onClick={handlePasswordShow}>{passwordShow ? <FaRegEyeSlash /> : <FaRegEye />}</span>
-                                    </div>                                 
+                                    </div>
                                     <button className="btn btn-primary mt-4">  Login</button>
                                 </fieldset>
 

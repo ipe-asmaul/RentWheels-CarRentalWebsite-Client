@@ -6,6 +6,7 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { IoPerson } from "react-icons/io5";
 import { MdAlternateEmail } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
+// import App from '../App';
 
 
 
@@ -13,7 +14,10 @@ import { FiPlus } from "react-icons/fi";
 
 const CarDetails = () => {
     return (
+        <>
+        
         <div className='bg-linear-to-bl from-orange-50 to-white h-full'>
+            {/* <div className="z-50 absolute top-0 right-0 w-full h-full overflow-hidden"><App/></div> */}
             <div className="details-content">
                 <div className="header-details flex flex-col md:flex-row w-full gap-20">
                     <div className="img w-full md:w-1/3">
@@ -70,6 +74,7 @@ const CarDetails = () => {
                 </div>
                
             </div>
+            </>
         
     );
 };
