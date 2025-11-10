@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Context } from '../auth/AuthContext';
 
 const MyBookings = () => {
+    const { user } = useContext(Context);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:3000/mybookedcars?email=${user.email}`)
+            .then(result => result.json())
+            .then(info => {
+                setData(info)
+            })
+            .catch(err => console.log(err))
+    }, [user])
     return (
         <div className='bg-linear-to-bl from-orange-100 to-white h-full'>
             <div className="my-listing pt-8">
@@ -8,7 +19,7 @@ const MyBookings = () => {
                 <div className="table-content">
                     <div className="overflow-x-auto">
                         <table className="table">
-                           
+
                             <thead>
                                 <tr>
                                     <th>Serial No.</th>
@@ -18,27 +29,18 @@ const MyBookings = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                
-                                <tr>
-                                    <th>1</th>
-                                    <td>Toyota SUV</td>
-                                    <td>Quality Control Specialist</td>
-                                    <td>$103.45</td>
-                                </tr>
-                               
-                                <tr className="hover:bg-base-100">
-                                    <th>2</th>
-                                    <td>Hart Hagerty</td>
-                                    <td>Desktop Support Technician</td>
-                                    <td>Purple</td>
-                                </tr>
-                                
-                                <tr>
-                                    <th>3</th>
-                                    <td>Brice Swyre</td>
-                                    <td>Tax Accountant</td>
-                                    <td>Red</td>
-                                </tr>
+                                {
+                                    data.map((item,index) => {
+                                        return (
+                                            <tr className="hover:bg-base-100">
+                                                <th>{(index + 1)}</th>
+                                                <td>{item.carName}</td>
+                                                <td>{item.description}</td>
+                                                <td>${item.rent}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
                         </table>
                     </div>

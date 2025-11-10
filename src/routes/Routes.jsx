@@ -11,59 +11,67 @@ import AllCars from "../pages/AllCars";
 import CarDetails from "../pages/CarDetails";
 import App from "../App";
 import LoadingAnimation from "../components/LoadingAnimation";
+import PrivateRoute from "../private-routes/PrivateRoute";
 
 const routes = createBrowserRouter([
-    {
-      path: '/',
-      errorElement: <ErrorPage/>,
-      Component: Root,
-      children: [
-        {
-          index:true,
-          Component: Home,
-        },
-        {
-          path: '/cars',
-          Component: AllCars,
-          loader: ()=> fetch('http://localhost:3000/cars'),
-          hydrateFallbackElement: <LoadingAnimation/>
-        },
-        {
-         path:'/details',
-         Component: CarDetails
-        },
-        {
-          path:'/login',
-          Component: Login
-        },
-        {
+  {
+    path: '/',
+    errorElement: <ErrorPage />,
+    Component: Root,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: '/cars',
+        Component: AllCars,
+        loader: () => fetch('http://localhost:3000/cars'),
+        hydrateFallbackElement: <LoadingAnimation />
+      },
+      {
+        path: '/car/:id',
+        element: <PrivateRoute><CarDetails/></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3000/car/${params.id}`),
+        hydrateFallbackElement: <LoadingAnimation />
+
+      },
+      {
+        path: '/details',
+        Component: CarDetails
+      },
+      {
+        path: '/login',
+        Component: Login
+      },
+      {
         path: '/register',
         Component: Register
-        },
-        {
-          path:'/addcar',
-          Component: AddCar
-        },
-        {
-          path:'/listing',
-          Component: MyListing,
-        
-        },
-        {
-          path:'/bookings',
-          Component: MyBookings
-        }
-        
-      ]
-    },
-    {
-      path:'/test',
-      Component: App
-    },
-    {
-      path:'*',
-      Component: ErrorPage
-    }
+      },
+      {
+        path: '/addcar',
+        Component: AddCar
+      },
+      {
+        path: '/listing',
+        Component: MyListing,
+
+      },
+      {
+        path: '/bookings',
+        Component: MyBookings
+      }
+
+    ]
+  },
+  {
+    path: '/test',
+    Component: App
+  },
+  {
+    path: '*',
+    Component: ErrorPage
+  }
 ])
 
 export default routes

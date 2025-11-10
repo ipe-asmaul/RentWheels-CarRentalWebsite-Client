@@ -34,12 +34,12 @@ const Home = () => {
             <div className="product-cards-featured w-9/10 md:w-7/10 lg:w-6/10 mx-auto container">
                 <h2 className=" text-4xl font-bold text-center mt-15 mb-5">Featured <span className='border-b-3 text-secondary border-primary'>Cars</span></h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
+                    {/* <ProductCard />
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    <ProductCard /> */}
                 </div>
             </div>
 
@@ -79,9 +79,9 @@ const Home = () => {
                 <div className="product-cards-featured w-9/10 md:w-7/10 lg:w-6/10 mx-auto container">
                     <h2 className=" text-4xl font-bold text-center mt-15 mb-5">Top <span className='border-b-3 text-secondary border-primary'>Rated</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
+                        {/* <ProductCard />
                         <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
+                        <ProductCard /> */}
 
                     </div>
                 </div>
