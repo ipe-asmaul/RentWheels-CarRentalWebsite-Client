@@ -5,7 +5,6 @@ import Footer from '../components/Footer';
 import CarouselSlide from '../components/CarouselSlide';
 import callCar from '../assets/car-call.png'
 import { FaPhone } from "react-icons/fa6";
-
 import ProductCard from '../components/ProductCard';
 import { ImCalendar } from "react-icons/im";
 import { GiWallet } from "react-icons/gi";
@@ -23,16 +22,8 @@ import BrandCarousel from '../components/BrandCarousel';
 const Home = () => {
     const data = useLoaderData();
     const [topData, setTopData] = useState([])
-    const [allData, setAllData] = useState([])
 
-    useEffect(() => {
-        fetch('https://rent-wheel-server.vercel.app/cars')
-            .then(result => result.json())
-            .then(data => {
-                setAllData(data)
-            })
-            .catch(err => console.log(err));
-    }, []);
+
         useEffect(() => {
         fetch('https://rent-wheel-server.vercel.app/top')
             .then(result => result.json())
@@ -42,10 +33,9 @@ const Home = () => {
             .catch(err => console.log(err));
     
     }, [])
-    console.log(allData.length)
     return (
         <div>
-            <div className=' bg-linear-to-r from-orange-50 via-white to-white mt-4'>
+            <div className=' bg-linear-to-r from-orange-50 via-white to-white mt-4 '>
                 <CarouselSlide />
             </div>
             <div className="our-partners text-center space-y-12  p-20 bg-secondary">

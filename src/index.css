@@ -16,3 +16,7 @@
 .navbar .menu a.active{
   border-bottom: 2px solid #F97316;
 }
+:root{
+    --swiper-navigation-color: #F97316;
+    --swiper-pagination-color: #F97316;
+}

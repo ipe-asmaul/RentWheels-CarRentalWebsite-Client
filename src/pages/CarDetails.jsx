@@ -71,8 +71,8 @@ const CarDetails = () => {
             
             <div className="details-content">
                 <div className="header-details flex flex-col md:flex-row w-full gap-20">
-                    <div className="img w-full md:w-1/3">
-                        <img src={data?.photo} alt="" className='h-full w-full aspect-4/3'/>
+                    <div className="img w-full md:w-1/3 p-2">
+                        <img src={data?.photo} alt="" className='h-full w-full aspect-4/3 rounded-md'/>
 
                     </div>
                     <div className="header-text-content flex flex-col space-y-6 justify-between flex-1 p-5">
@@ -106,11 +106,11 @@ const CarDetails = () => {
 
 
                            </div>
-                           <div className="provider-info space-y-3">
-                            <h4 className="text-2xl font-semibold text-secondary">Provider Info</h4>
+                           <div className="provider-info space-y-2">
+                            <h4 className="text-xl font-semibold text-secondary">Provider Info</h4>
                             <div className="details-provider">
-                                <p className='text-xl text-black flex items-center gap-2 opacity-85'><IoPerson/> {data.userName}</p>
-                                <p className='text-xl text-black flex items-center gap-2 opacity-85'><MdAlternateEmail/> {data.email}</p>
+                                <p className='text-md text-black flex items-center gap-2 opacity-85'><IoPerson/> {data.userName}</p>
+                                <p className='text-md text-black flex items-center gap-2 opacity-85'><MdAlternateEmail/> {data.email}</p>
                             </div>
                            </div>
                            <button className="btn btn-primary w-fit text-secondary" onClick={handleBookNow} disabled={data.isBooked}>Book Now <FiPlus/></button>

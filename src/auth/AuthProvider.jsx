@@ -5,7 +5,16 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [allData, setAllData] = useState([])
+    useEffect(() => {
+        fetch('https://rent-wheel-server.vercel.app/cars')
+            .then(result => result.json())
+            .then(data => {
+                setAllData(data)
+            })
+            .catch(err => console.log(err));
+    }, []);
 
     const signInWithGoogle  = () =>{
        const provider = new GoogleAuthProvider();
@@ -45,6 +54,9 @@ const AuthProvider = ({children}) => {
         setUser,
         loading,
         setLoading,
+        allData,
+        setAllData,
+       
 
     }
     return (
