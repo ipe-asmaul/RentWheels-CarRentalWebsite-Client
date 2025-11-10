@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../auth/AuthContext';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const MyBookings = () => {
-    const { user } = useContext(Context);
+    const { user,loading } = useContext(Context);
+    console.log(loading)
     const [data, setData] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:3000/mybookedcars?email=${user.email}`)
+        fetch(`https://rent-wheel-server.vercel.app/mybookedcars?email=${user.email}`)
             .then(result => result.json())
             .then(info => {
                 setData(info)
@@ -14,6 +16,9 @@ const MyBookings = () => {
     }, [user])
     return (
         <div className='bg-linear-to-bl from-orange-100 to-white h-full'>
+            {
+                loading ? <LoadingAnimation/>
+                :
             <div className="my-listing pt-8">
                 <h3 className="text-2xl font-bold text-primary text-center mb-10">My Bookings</h3>
                 <div className="table-content">
@@ -32,7 +37,7 @@ const MyBookings = () => {
                                 {
                                     data.map((item,index) => {
                                         return (
-                                            <tr className="hover:bg-base-100">
+                                            <tr className="hover:bg-base-100" key={item._id}>
                                                 <th>{(index + 1)}</th>
                                                 <td>{item.carName}</td>
                                                 <td>{item.description}</td>
@@ -46,6 +51,8 @@ const MyBookings = () => {
                     </div>
                 </div>
             </div>
+            
+}
         </div>
     );
 };

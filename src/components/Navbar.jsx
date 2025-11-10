@@ -6,7 +6,7 @@ import { Context } from '../auth/AuthContext';
 
 const Navbar = () => {
     const { user, loading, logOut } = useContext(Context)
-    console.log(user)
+    // console.log(user)
     const handleLogOut = () => {
         logOut().then(() => console.log('Logged Out')).catch(err => console.log(err))
     }
@@ -23,17 +23,10 @@ const Navbar = () => {
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <NavLink to={'/'}>Home</NavLink>
                             <NavLink to={'/cars'}>Browse Cars</NavLink>
-                            {
+                            <NavLink to={'/addcar'}>Add Car</NavLink>
+                            <NavLink to={'/listing'}>My Listing</NavLink>
+                            <NavLink to={'/bookings'}>My Bookings</NavLink>
 
-                                user &&
-                                <>
-                                    <NavLink to={'/addcar'}>Add Car</NavLink>
-                                    <NavLink to={'/listing'}>My Listing</NavLink>
-                                    <NavLink to={'/bookings'}>My Bookings</NavLink>
-                                </>
-
-
-                            }
 
                         </ul>
                     </div>
@@ -43,13 +36,9 @@ const Navbar = () => {
                     <ul className="menu menu-horizontal px-1 space-x-4">
                         <NavLink to={'/'}>Home</NavLink>
                         <NavLink to={'/cars'}>Browse Cars</NavLink>
-                        {user &&
-                            <>
-                                <NavLink to={'/addcar'}>Add Car</NavLink>
-                                <NavLink to={'/listing'}>My Listing</NavLink>
-                                <NavLink to={'/bookings'}>My Bookings</NavLink>
-                            </>
-                        }
+                        <NavLink to={'/addcar'}>Add Car</NavLink>
+                        <NavLink to={'/listing'}>My Listing</NavLink>
+                        <NavLink to={'/bookings'}>My Bookings</NavLink>
 
                     </ul>
                 </div>

@@ -1,38 +1,52 @@
 import React, { useContext, useState } from 'react';
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { Context } from '../auth/AuthContext';
 
 
 const Login = () => {
-    const { userLogin, signInWithGoogle,setLoading } = useContext(Context)
+    const { userLogin, signInWithGoogle, setLoading } = useContext(Context)
     const [passwordShow, setPasswordShow] = useState(false)
+    const location = useLocation();
+    const navigate = useNavigate();
+    const destination = location.state.from || '/';
+    const [loggingSpinner, setLoginSpinner] = useState(false)
+    // console.log(destination)
     const handleGoogleSignIn = () => {
-        signInWithGoogle().then(result => { 
-            console.log(result.user); 
-            setLoading(false); 
-            fetch('http://localhost:3000/user',{
-                method:'POST',
-                headers: { 'content-type' : 'application/json'},
-                body: JSON.stringify({name:result.user.displayName,email: result.user.email})
+        signInWithGoogle().then(result => {
+            console.log(result.user);
+            setLoading(false);
+
+            fetch('https://rent-wheel-server.vercel.app/user', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ name: result.user.displayName, email: result.user.email })
 
             })
-            .then(result => result.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
+                .then(result => result.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+            navigate(destination)
 
 
-         }).catch(err => console.log(err))
+        }).catch(err => console.log(err))
 
     }
     const handleLogin = (e) => {
+        setLoginSpinner(true)
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         userLogin(email, password)
-            .then(data => { console.log(data) })
-            .catch(err => console.log(err.message))
+            .then(data => {
+                console.log(data)
+                setLoginSpinner(false)
+                navigate(`${destination}`)
+
+            })
+            .catch(err => console.log(err.message));
+
 
     }
     const handlePasswordShow = () => {
@@ -57,7 +71,8 @@ const Login = () => {
                                         <input type={passwordShow ? 'text' : 'password'} className="input" placeholder="Password" name='password' required />
                                         <span className='text-xl -ml-7 absolute top-2' onClick={handlePasswordShow}>{passwordShow ? <FaRegEyeSlash /> : <FaRegEye />}</span>
                                     </div>
-                                    <button className="btn btn-primary mt-4">  Login</button>
+                                    <button className="btn btn-primary mt-4">{loggingSpinner && <span className="loading loading-dots loading-xl"></span>
+                                    }  Login</button>
                                 </fieldset>
 
                             </form>

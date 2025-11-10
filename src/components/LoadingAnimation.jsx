@@ -1,10 +1,11 @@
 import React from 'react';
-import loadingGif from '../assets/loading.gif'
+import carLoading from '../assets/Car.json'
+import Lottie from 'lottie-react';
 
 const LoadingAnimation = () => {
     return (
-        <div className='h-full flex items-center justify-center bg-black backdrop-blur-3xl opacity-80'>
-            <img src={loadingGif} alt="" className='opacity-100'/>
+        <div className='h-full flex items-center justify-center bg-white backdrop-blur-3xl opacity-60 w-full '>
+            <Lottie animationData={carLoading}></Lottie>
         </div>
     );
 };

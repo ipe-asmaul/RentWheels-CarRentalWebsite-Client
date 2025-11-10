@@ -21,8 +21,20 @@ const Register = () => {
         userRegistration(email,password)
         .then(data =>{
             setUser({...data.user, displayName:name,photoURL:photo})
-           userUpdate(name,photo)
-           .then(() => setLoading(false))
+            userUpdate(name,photo)
+           .then(() => {
+            setLoading(false);
+               fetch('https://rent-wheel-server.vercel.app/user',{
+                method:'POST',
+                headers: { 'content-type' : 'application/json'},
+                body: JSON.stringify({name,email})
+
+            })
+            .then(result => result.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+
+           })
            .catch(err => console.log(err))
         })
 

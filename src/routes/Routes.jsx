@@ -22,23 +22,27 @@ const routes = createBrowserRouter([
       {
         index: true,
         Component: Home,
+        loader: ()=> fetch('https://rent-wheel-server.vercel.app/featured')
+           ,
+        hydrateFallbackElement: <LoadingAnimation />
+
       },
       {
         path: '/cars',
         Component: AllCars,
-        loader: () => fetch('http://localhost:3000/cars'),
+        loader: () => fetch('https://rent-wheel-server.vercel.app/cars'),
         hydrateFallbackElement: <LoadingAnimation />
       },
       {
         path: '/car/:id',
-        element: <PrivateRoute><CarDetails/></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/car/${params.id}`),
+        element: <PrivateRoute><CarDetails /></PrivateRoute>,
+        loader: ({ params }) => fetch(`https://rent-wheel-server.vercel.app/car/${params.id}`),
         hydrateFallbackElement: <LoadingAnimation />
 
       },
       {
         path: '/details',
-        Component: CarDetails
+        element: <PrivateRoute><CarDetails/></PrivateRoute>
       },
       {
         path: '/login',
@@ -50,16 +54,16 @@ const routes = createBrowserRouter([
       },
       {
         path: '/addcar',
-        Component: AddCar
+        element: <PrivateRoute><AddCar/></PrivateRoute>
       },
       {
         path: '/listing',
-        Component: MyListing,
+        element: <PrivateRoute><MyListing /></PrivateRoute>,
 
       },
       {
         path: '/bookings',
-        Component: MyBookings
+        element: <PrivateRoute><MyBookings/></PrivateRoute>
       }
 
     ]

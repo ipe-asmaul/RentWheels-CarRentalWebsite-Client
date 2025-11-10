@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import { Outlet } from 'react-router';
+import { Outlet, useLoaderData } from 'react-router';
 import Footer from '../components/Footer';
 import CarouselSlide from '../components/CarouselSlide';
 import callCar from '../assets/car-call.png'
@@ -21,6 +21,28 @@ import BrandCarousel from '../components/BrandCarousel';
 
 
 const Home = () => {
+    const data = useLoaderData();
+    const [topData, setTopData] = useState([])
+    const [allData, setAllData] = useState([])
+
+    useEffect(() => {
+        fetch('https://rent-wheel-server.vercel.app/cars')
+            .then(result => result.json())
+            .then(data => {
+                setAllData(data)
+            })
+            .catch(err => console.log(err));
+    }, []);
+        useEffect(() => {
+        fetch('https://rent-wheel-server.vercel.app/top')
+            .then(result => result.json())
+            .then(data => {
+                setTopData(data)
+            })
+            .catch(err => console.log(err));
+    
+    }, [])
+    console.log(allData.length)
     return (
         <div>
             <div className=' bg-linear-to-r from-orange-50 via-white to-white mt-4'>
@@ -34,12 +56,9 @@ const Home = () => {
             <div className="product-cards-featured w-9/10 md:w-7/10 lg:w-6/10 mx-auto container">
                 <h2 className=" text-4xl font-bold text-center mt-15 mb-5">Featured <span className='border-b-3 text-secondary border-primary'>Cars</span></h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
-                    {/* <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard /> */}
+                    {
+                        data.map(car => <ProductCard key={car._id} car={car} />)
+                    }
                 </div>
             </div>
 
@@ -79,9 +98,8 @@ const Home = () => {
                 <div className="product-cards-featured w-9/10 md:w-7/10 lg:w-6/10 mx-auto container">
                     <h2 className=" text-4xl font-bold text-center mt-15 mb-5">Top <span className='border-b-3 text-secondary border-primary'>Rated</span></h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
-                        {/* <ProductCard />
-                        <ProductCard />
-                        <ProductCard /> */}
+
+                        {topData.map(car => <ProductCard key={car._id} car={car} />)}
 
                     </div>
                 </div>

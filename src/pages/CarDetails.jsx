@@ -10,6 +10,8 @@ import { useLoaderData } from 'react-router';
 // import App from '../App';
 import { CgBlock } from "react-icons/cg";
 import { Context } from '../auth/AuthContext';
+import Swal from 'sweetalert2';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 
 
@@ -19,11 +21,13 @@ import { Context } from '../auth/AuthContext';
 const CarDetails = () => {
     const loadingData = useLoaderData();
     const [data,setData] = useState(() => loadingData || [])
+    const [bookingLoading, setBookingLoading] = useState(false)
+
     
     useEffect(()=>{
-         setData(loadingData)
+    setData(loadingData)
     },[loadingData])
-    console.log(data)
+    // console.log(data)
     const {user, loading} = useContext(Context);
     
    
@@ -32,7 +36,8 @@ const CarDetails = () => {
         bookingHolder: user.email
     }
     const handleBookNow = () =>{
-          fetch(`http://localhost:3000/booking-car/${data._id}`, {
+        setBookingLoading(true)
+          fetch(`https://rent-wheel-server.vercel.app/booking-car/${data._id}`, {
             method: "PATCH",
             headers: {
                 "content-type" : "application/json"
@@ -43,13 +48,24 @@ const CarDetails = () => {
           .then(info => 
             {console.log(info);
              setData(prev => ({...prev, isBooked: true}))
+             setBookingLoading(false);
+               Swal.fire({
+                        icon: "success",
+                        title: "Car Booked",
+                        text: "Successfully Booked Your Drive!",
+                    });
           })
           .catch(err => console.log(err))
     }
     return (
         <>
         <title>{data?.carName}</title>
-        <div className='bg-linear-to-bl from-orange-50 to-white h-full'>
+        <div className='bg-linear-to-bl from-orange-50 to-white h-full relative'>
+            {
+                bookingLoading && <div className='fixed top-0 right-0 w-full z-50'>
+                    <LoadingAnimation/>
+                </div>
+            }
             {
        !loading &&
             

@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Context } from '../auth/AuthContext';
 import Swal from 'sweetalert2';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const AddCar = () => {
-    const { user } = useContext(Context)
-    console.log(user)
+    const { user, loading } = useContext(Context)
+    // console.log(user)
     const handleAddCar = (e) => {
         e.preventDefault();
         const carName = e.target.name.value;
@@ -17,7 +18,7 @@ const AddCar = () => {
         const email = user.email;
         const carObj = { carName, description, rent, location, photo, category,isBooked: false, userName, email }
 
-        fetch('http://localhost:3000/addcar', {
+        fetch('https://rent-wheel-server.vercel.app/addcar', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -40,6 +41,8 @@ const AddCar = () => {
     }
     return (
         <div>
+            {
+        !loading && user?
             <div className="add-car flex w-full flex-col items-center justify-center bg-linear-to-bl from-orange-100 to-white p-15">
                 <h3 className="text-3xl font-bold text-secondary mb-6">Add New Car</h3>
                 <form className=' w-fit h-fit p-10 border-2 border-primary space-y-2.5 rounded-xl shadow-2xl' onSubmit={handleAddCar}>
@@ -156,6 +159,8 @@ const AddCar = () => {
                 </form>
 
             </div>
+            :<LoadingAnimation/>
+}
         </div>
     );
 };
