@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from '../auth/AuthContext';
 import Swal from 'sweetalert2';
 import LoadingAnimation from '../components/LoadingAnimation';
+import { toast } from 'react-toastify';
 
 const AddCar = () => {
     const { user, loading } = useContext(Context)
@@ -30,13 +31,13 @@ const AddCar = () => {
                 if (data.insertedId) {
                     Swal.fire({
                         icon: "success",
-                        title: "Data Added",
+                        title: "Car Includede to Database",
                         text: "Successfully inserted data to database!",
                     });
                     e.target.reset()
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => toast.error(err))
 
     }
     return (

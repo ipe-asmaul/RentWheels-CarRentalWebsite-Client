@@ -1,16 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Context } from '../auth/AuthContext';
+import { toast } from 'react-toastify';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const Register = () => {
-    const {signInWithGoogle,setUser, setLoading, userRegistration, userUpdate} = useContext(Context)
+    const [passError, setPassError] = useState(null);
+    const [registrationLoading, setRegistrationLoading] = useState(false);
+    const navigate = useNavigate()
+    const { signInWithGoogle, setUser, setLoading, userRegistration, userUpdate } = useContext(Context)
     //console.log(context)
     const [passwordShow, setPasswordShow] = useState(false)
 
     const handleGoogleSignIn = () => {
-           signInWithGoogle().then(result => {console.log(result.user); setLoading(false)}).catch(err => console.log(err))
+        signInWithGoogle().then(() => {  setLoading(false); navigate('/') }).catch(err => toast.error(err.message))
     }
     const handleRegister = (e) => {
         e.preventDefault();
@@ -18,25 +23,42 @@ const Register = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const photo = e.target.url.value;
-        userRegistration(email,password)
-        .then(data =>{
-            setUser({...data.user, displayName:name,photoURL:photo})
-            userUpdate(name,photo)
-           .then(() => {
-            setLoading(false);
-               fetch('https://rent-wheel-server.vercel.app/user',{
-                method:'POST',
-                headers: { 'content-type' : 'application/json'},
-                body: JSON.stringify({name,email})
+        const passPattern = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        if (!passPattern.test(password)) {
+            setPassError(true);
+            toast.error('Follow Proper Password Pattern')
+            return
+        }
+       setRegistrationLoading(true)
+        userRegistration(email, password)
+            .then(data => {
+                setUser({ ...data.user, displayName: name, photoURL: photo })
+                userUpdate(name, photo)
+                    .then(() => {
+                        setLoading(false);
+                        fetch('https://rent-wheel-server.vercel.app/user', {
+                            method: 'POST',
+                            headers: { 'content-type': 'application/json' },
+                            body: JSON.stringify({ name, email })
 
-            })
-            .then(result => result.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
+                        })
+                            .then(result => result.json())
+                            .then((data) => {
+                                data.insertedId && toast.success('Registration Successfull');
+                                setRegistrationLoading(false);
+                                e.target.reset();
+                                navigate('/')
 
-           })
-           .catch(err => console.log(err))
-        })
+
+
+
+                            })
+                            .catch(err => toast.error(err.message))
+                            .finally(()=> setRegistrationLoading(false))
+
+                    })
+                    .catch(err => toast.error((err.message)))
+            }).catch(err => toast.error(err.message)).finally(()=> setRegistrationLoading(false))
 
     }
     const handlePasswordShow = () => {
@@ -44,8 +66,11 @@ const Register = () => {
 
     }
     return (
-        <div>
+        <div className='relative'>
             <title>Register - Rent WHeel</title>
+            {
+                registrationLoading && <div className='fixed top-0 right-0 w-full z-50'><LoadingAnimation/> </div>
+            }
             <div className="hero bg-linear-to-bl from-orange-100 to-white p-15">
                 <div className="hero-content flex-col">
                     <div className="text-center lg:text-left">
@@ -67,13 +92,13 @@ const Register = () => {
                                         <span className='text-xl -ml-7 absolute top-2' onClick={handlePasswordShow}>{passwordShow ? <FaRegEyeSlash /> : <FaRegEye />}</span>
                                     </div>
 
-                                    {/* {error && <div><a className="text-red-500">
+                                    {passError && <div><a className="text-red-500">
                                         <ul>
                                             <li>Minimum one Uppercase</li>
                                             <li>Minimum one Lowercase</li>
                                             <li>Minimum 6 Characters</li>
                                         </ul>
-                                    </a></div>} */}
+                                    </a></div>}
 
                                     <button className="btn btn-primary mt-4"> Register</button>
 

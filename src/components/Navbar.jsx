@@ -1,34 +1,50 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { GiCarWheel } from "react-icons/gi";
-import { Link, NavLink, useLocation } from 'react-router';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router';
 import { Context } from '../auth/AuthContext';
 import { Links } from 'react-router';
+import LoadingAnimation from './LoadingAnimation';
 
 
 const Navbar = () => {
-    const { user, loading, logOut, allData } = useContext(Context);
+    const { user, loading, logOut, allData,setSearchLoading } = useContext(Context);
+    // const navigation = useNavigation();
+    const navigate = useNavigate()
     const [data, setData] = useState(allData)
+    // console.log(allData)
     const [query, setQuery] = useState(null)
     useEffect(() => {
         if (!query) {
             setData(allData)
         } else {
-            setData(prev => prev.filter(el => el.carName.trim().toLowerCase().includes(query.trim().toLowerCase())))
+            setData(allData.filter(el => el.carName.trim().toLowerCase().includes(query.trim().toLowerCase())))
 
         }
 
     }, [query, allData])
+            // console.log(data)
+
     const search_modal = useRef(null)
     const location = useLocation();
-    if(location.pathname !== '/'){
-        search_modal.current.close();
-    }
+
     const handleSearchClick = () => {
+    //         if(location.pathname !== '/'){
+            
+    // }
         search_modal.current.showModal();
     }
     const handleInput = (e) => {
         setQuery(e.target.value);
      
+    }
+    const handleClickingData = (id) =>{
+        search_modal.current.close();
+        setSearchLoading(true)
+        navigate(`/car/${id}`);
+        setInterval(()=> setSearchLoading(false),800) 
+
+                
+
     }
 
     const handleLogOut = () => {
@@ -133,17 +149,18 @@ const Navbar = () => {
                        
                           
                            query ? data.length ? data.map(element => {return(
-                           <Link to={`/car/${element._id}`} className="flex justify-between items-center card-search mt-3 hover:bg-gray-100 p-2 rounded-md h-fit w-full" key={element._id}>
+                           <div onClick = {() =>handleClickingData(element._id)} className="flex justify-between items-center card-search mt-3 hover:bg-gray-100 p-2 rounded-md h-fit w-full" key={element._id}>
                             <div className="text-content">
                            <p className=' text-start mx-2 text-xl text-primary hover:text-seondary'>{element.carName}</p>
                            <p className="text-gray-600 font-semibold ml-2">${element.rent}</p>
                            <span className={`h-fit w-fit px-2 py-1 rounded-md ${element.isBooked ? 'bg-orange-100 text-orange-900' : 'bg-green-100 text-green-900'}`}>{element.isBooked ? 'Booked' : 'Available'}</span>
                            </div>
                            <div className="img w-1/4"><img src={element.photo} className='w-full h-fit aspect-4/3 rounded-md' alt="" /></div>
-                           </Link>
+                           </div>
                           
                         )
                         })
+                        
                         :<p className="text-gray-500 text-center">No Car Matched</p>
                          : <p className="text-gray-500 text-center">Nothing Here</p>
 

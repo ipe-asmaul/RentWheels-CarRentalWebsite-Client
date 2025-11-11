@@ -7,6 +7,7 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [allData, setAllData] = useState([])
+    const [searchLoading, setSearchLoading] = useState(false)
     useEffect(() => {
         fetch('https://rent-wheel-server.vercel.app/cars')
             .then(result => result.json())
@@ -56,6 +57,8 @@ const AuthProvider = ({children}) => {
         setLoading,
         allData,
         setAllData,
+        searchLoading,
+        setSearchLoading
        
 
     }

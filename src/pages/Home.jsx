@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Outlet, useLoaderData } from 'react-router';
 import Footer from '../components/Footer';
@@ -12,6 +12,8 @@ import { LuClock3 } from "react-icons/lu";
 import { RiCustomerService2Line } from "react-icons/ri";
 import Testimonials from '../components/Testimonials';
 import BrandCarousel from '../components/BrandCarousel';
+import { Context } from '../auth/AuthContext';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 
 
@@ -20,9 +22,9 @@ import BrandCarousel from '../components/BrandCarousel';
 
 
 const Home = () => {
+    const {searchLoading} = useContext(Context)
     const data = useLoaderData();
     const [topData, setTopData] = useState([])
-
 
         useEffect(() => {
         fetch('https://rent-wheel-server.vercel.app/top')
@@ -34,7 +36,10 @@ const Home = () => {
     
     }, [])
     return (
-        <div>
+        <div className='relative'>
+            {
+                searchLoading && <div className='fixed top-0 right-0 h-full w-full z-50'><LoadingAnimation/></div>
+            }
             <div className=' bg-linear-to-r from-orange-50 via-white to-white mt-4 '>
                 <CarouselSlide />
             </div>
