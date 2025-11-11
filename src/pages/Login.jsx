@@ -10,12 +10,12 @@ const Login = () => {
     const [passwordShow, setPasswordShow] = useState(false)
     const location = useLocation();
     const navigate = useNavigate();
-    const destination = location.state.from || '/';
+    const destination = location.state?.from || '/';
     const [loggingSpinner, setLoginSpinner] = useState(false)
     // console.log(destination)
     const handleGoogleSignIn = () => {
         signInWithGoogle().then(result => {
-            console.log(result.user);
+            
             setLoading(false);
 
             fetch('https://rent-wheel-server.vercel.app/user', {
