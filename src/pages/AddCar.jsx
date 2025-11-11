@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Context } from '../auth/AuthContext';
 import Swal from 'sweetalert2';
 import LoadingAnimation from '../components/LoadingAnimation';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 const AddCar = () => {
     const { user, loading } = useContext(Context)
+    const [addCarLoading, setAddCarLoading] = useState(false)
     // console.log(user)
     const handleAddCar = (e) => {
         e.preventDefault();
@@ -18,7 +19,7 @@ const AddCar = () => {
         const userName = user.displayName;
         const email = user.email;
         const carObj = { carName, description, rent, location, photo, category,isBooked: false, userName, email }
-
+        setAddCarLoading(true)
         fetch('https://rent-wheel-server.vercel.app/addcar', {
             method: 'POST',
             headers: {
@@ -28,7 +29,9 @@ const AddCar = () => {
         })
             .then(result => result.json())
             .then(data => {
+                
                 if (data.insertedId) {
+                    setAddCarLoading(false)
                     Swal.fire({
                         icon: "success",
                         title: "Car Includede to Database",
@@ -41,7 +44,12 @@ const AddCar = () => {
 
     }
     return (
-        <div>
+        <div className='relative'>
+            {
+                addCarLoading && <div className='fixed top-0 right-0 w-full z-50'>
+                    <LoadingAnimation/>
+                </div>
+            }
             {
         !loading && user?
             <div className="add-car flex w-full flex-col items-center justify-center bg-linear-to-bl from-orange-100 to-white p-15">

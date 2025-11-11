@@ -3,6 +3,7 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router';
 import { Context } from '../auth/AuthContext';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -25,12 +26,12 @@ const Login = () => {
 
             })
                 .then(result => result.json())
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
+                .then(() => toast.success('Successfully signed in'))
+                .catch(err => toast.error(err.message));
             navigate(destination)
 
 
-        }).catch(err => console.log(err))
+        }).catch(err => toast.error(err.message))
 
     }
     const handleLogin = (e) => {
@@ -39,13 +40,13 @@ const Login = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         userLogin(email, password)
-            .then(data => {
-                console.log(data)
+            .then(() => {
+                toast.success('Succesfully Logged In')
                 setLoginSpinner(false)
                 navigate(`${destination}`)
 
             })
-            .catch(err => console.log(err.message));
+            .catch(err => toast.error(err.message));
 
 
     }
