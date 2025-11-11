@@ -1,90 +1,28 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from 'react';
+import img from './assets/suv-slider.png'
+import { Tooltip } from 'react-tooltip';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import slideOne from './assets/suv-slider.png'
-import { Link } from 'react-router';
-import { Fade, Slide } from 'react-awesome-reveal';
-
-
-// import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-
-export default function App() {
+const App = () => {
   return (
-    <>
-      <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
-      >
-                <SwiperSlide>
-                  <div className="slide-content flex flex-col-reverse md:flex-row justify-between items-center w-9/10 mx-auto container h-[500px] py-5">
-                    <div className="text-content">
-                      <Fade cascade duration={1500}>
-                        <h2 className="text-secondary text-3xl font-bold mb-3">Affordable Rent</h2>
-                      </Fade>
-                      <Fade cascade duration={2000}>
-                        <p className='text-justify text-gray-500'>Experience top tier Comfort in afforadable range with our premium car selection. Perfect for leisure and business</p>
-                      </Fade>
-                      <Link to={'/cars'} className='btn btn-primary text-black mt-3'>Book Now</Link>
-                    </div>
-                    <Slide direction='right'>
-                      <div className="img"><img src={slideOne} alt="Hunday Suv" className='aspect-4/3 h-full w-full' /></div>
-                    </Slide>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className="slide-content flex flex-col-reverse md:flex-row justify-between items-center w-9/10 mx-auto container h-[500px] py-5">
-                    <div className="text-content">
-                      <Fade cascade duration={1500}>
-                        <h2 className="text-secondary text-3xl font-bold mb-3">Flexible Timing and Easy Booking</h2>
-                      </Fade>
-                      <Fade cascade duration={2000}>
-                        <p className='text-justify text-gray-500'>Experience top tier Comfort in afforadable range with our premium car selection. Perfect for leisure and business</p>
-        
-                      </Fade>
-                      <Link to={'/cars'} className='btn btn-primary text-black mt-3'>Book Now</Link>
-                    </div>
-                    <Slide direction='right'>
-                      <div className="img"><img src={slideOne} alt="Hunday Suv" className='aspect-4/3 h-full w-full' /></div>
-                    </Slide>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className="slide-content flex flex-col-reverse md:flex-row justify-between items-center w-9/10 mx-auto container h-[500px] py-5">
-        
-                    <div className="text-content">
-                      <Fade cascade duration={1500}>
-                        <h2 className="text-secondary text-3xl font-bold mb-3">Luxury Comfort, Every Journey</h2>
-                      </Fade>
-                      <Fade cascade duration={2000}>
-                        <p className='text-justify text-gray-500'>Experience top tier Comfort in afforadable range with our premium car selection. Perfect for leisure and business</p>
-        
-                      </Fade>
-                      <Link to={'/cars'} className='btn btn-primary text-black mt-3'>Book Now</Link>
-                    </div>
-        
-        
-                    <Slide direction='right'>
-                      <div className="img"><img src={slideOne} alt="Hunday Suv" className='aspect-4/3 h-full w-full' /></div>
-                    </Slide>
-                  </div>
-                </SwiperSlide>
-      </Swiper>
-    </>
+
+    <div>
+      <div className="group top-card cursor relative overflow-hidden pointer h-[400px] rounded-xl bg-linear-to-tl from-orange-700 to-orange-300 shadow-md w-fit p-5 flex flex-col items-center justify-center gap-5" data-tooltip-id='top-tool-tip' data-tooltip-delay-hide={1000}>
+        <div className="hidden group-hover:block transition duration-800 absolute top-0 right-0 bg-primary/70 h-1/4 w-2/4 rounded-bl-full"></div>
+        <div className="text-content group-hover:bg-white/5 p-2 rounded-xl transition duration-300 z-50">
+          <h3 className="text-xl text-secondary font-black w-fit h-fit p-3 rounded-xl bg-white/10">Toyota SUV</h3>
+        </div>
+        <div className="img h-1/2"><img src={img} className='h-full aspect-autot-4/3 mix-blend-multiply group-hover:mix-blend-normal transition duration-300' /></div>
+        <div className="hidden group-hover:block transition duration-1000 absolute bottom-0 left-0 bg-secondary/70 h-1/4 w-2/4 rounded-tr-full "></div>
+
+      </div>
+      <Tooltip id='top-tool-tip' style={{padding:0, backgroundColor: '#F97316'}}>
+        <div className="tool-tips-content bg-linear-to-tl from-orange-700 to-orange-300 px-3 py-1 rounded-md text-center">
+           <p>Price: $1000</p>
+           <p>Available</p>
+        </div>
+      </Tooltip>
+    </div>
   );
-}
+};
+
+export default App;
