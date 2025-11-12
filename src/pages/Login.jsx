@@ -46,7 +46,9 @@ const Login = () => {
                 navigate(`${destination}`)
 
             })
-            .catch(err => toast.error(err.message));
+            .catch(err => toast.error(err.message))
+            .finally(()=> setLoginSpinner(false))
+            
 
 
     }

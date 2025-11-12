@@ -15,6 +15,7 @@ const ProductCard = ({car}) => {
                 </div>
                 <div className="text-content p-2 space-y-2">
                     <h3 className="text-2xl font-bold text-secondary">{car.carName}</h3>
+                    <p className="text-gray-700 bg-gray-200 h-fit w-fit px-3 py-1 rounded-2xl mb-3">{car.category}</p>
                     <h3 className="font-bold text-secondary"> <span className='flex items-center'><FaDollarSign /><span className='text-4xl'>{car.rent}<sub className='text-primary text-sm'>per day</sub></span></span></h3>
                     <p className="text-gray-500 flex items-center gap-1.5 text-md"><span className='text-green-500'> <MdVerifiedUser /> </span> {car.userName}</p>
                     <Link to={`/car/${car._id}`} className='btn btn-secondary hover:btn-primary w-full text-white mb-3'>View Details</Link>

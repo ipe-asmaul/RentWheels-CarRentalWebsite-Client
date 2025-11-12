@@ -1,5 +1,6 @@
+import Lottie from 'lottie-react';
 import React from 'react';
-import { FaCarCrash } from "react-icons/fa";
+import errorGif from '../assets/404.json'
 import { GoHome } from "react-icons/go";
 import { Link } from 'react-router';
 
@@ -7,11 +8,14 @@ import { Link } from 'react-router';
 const ErrorPage = () => {
     return (
         <div className='flex h-screen w-full flex-col items-center justify-center gap-3'>
-            <div className="iconOfErrorPage text-9xl text-primary">
-             <FaCarCrash/>
+                        <title>Not Found - Rent Wheel</title>
+
+            <div className="iconOfErrorPage text-primary">
+             <Lottie animationData={errorGif}></Lottie>
             </div>
             <div className="text-content space-y-2 text-center">
-                <h3 className="text-xl font-bold text-secondary">Opps! No Car Broken</h3>
+                <h3 className="text-xl font-bold text-secondary">Opps! Seems Car Broken</h3>
+                <p className="text-gray-600">No Page Found </p>
                 <Link to={'/'} className="btn btn-primary">Back <GoHome/></Link>
                 
             </div>

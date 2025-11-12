@@ -12,7 +12,11 @@ const MyListing = () => {
     const [modalLoading, setModalLoading] = useState(true)
     useEffect(() => {
         setIsDataLoaded(true)
-        fetch(`https://rent-wheel-server.vercel.app/listings?email=${user?.email}`)
+        fetch(`https://rent-wheel-server.vercel.app/listings?email=${user?.email}`,{
+            headers: {
+                authorization: `Bearer ${user.accessToken}`
+            }
+            })
             .then(result => result.json())
             .then(info => { setData(info); setIsDataLoaded(false) })
             .catch(err => console.log(err));
@@ -23,6 +27,7 @@ const MyListing = () => {
             .then(result => result.json())
             .then(info => { setSingleData(info); setModalLoading(false) })
             .catch(err => console.log(err))
+            .finally(()=> setModalLoading(false))
     }, [updateId])
     // console.log(data)
     const modal_update = useRef(null)
@@ -106,6 +111,8 @@ const MyListing = () => {
     }
     return (
         <div className='bg-linear-to-bl from-accent to-white h-full'>
+            <title>Added Cars - Rent Wheel</title>
+            
             {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
             <dialog id="my_modal_5" ref={modal_update} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
@@ -185,7 +192,7 @@ const MyListing = () => {
                                 <div className="modal-action">
                                     <form method="dialog">
                                         {/* if there is a button in form, it will close the modal */}
-                                        <button className="btn">Close</button>
+                                        <button className="btn" onClick={()=> setModalLoading(false)}>Close</button>
                                     </form>
 
 

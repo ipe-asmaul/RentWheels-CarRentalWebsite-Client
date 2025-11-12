@@ -3,7 +3,6 @@ import Navbar from '../components/Navbar';
 import { Outlet, useLoaderData } from 'react-router';
 import Footer from '../components/Footer';
 import CarouselSlide from '../components/CarouselSlide';
-import callCar from '../assets/car-call.png'
 import { FaPhone } from "react-icons/fa6";
 import ProductCard from '../components/ProductCard';
 import { ImCalendar } from "react-icons/im";
@@ -15,6 +14,8 @@ import BrandCarousel from '../components/BrandCarousel';
 import { Context } from '../auth/AuthContext';
 import LoadingAnimation from '../components/LoadingAnimation';
 import TopCard from '../components/TopCard';
+import Lottie from 'lottie-react';
+import supportGif from '../assets/support.json'
 
 
 
@@ -38,14 +39,16 @@ const Home = () => {
     }, [])
     return (
         <div className='relative'>
+                        <title>Rent Wheel - Best Car Rental Provider</title>
+
             {
                 searchLoading && <div className='fixed top-0 right-0 h-full w-full z-50'><LoadingAnimation/></div>
             }
             <div className=' bg-linear-to-r from-orange-50 via-white to-white mt-4 '>
                 <CarouselSlide />
             </div>
-            <div className="our-partners text-center space-y-12  p-20 bg-secondary">
-                <h2 className='text-5xl font-bold'><span className='text-accent'>Our</span> <span className="text-primary">Partners</span></h2>
+            <div className="our-partners text-center space-y-5 md:space-y-12  p-20 bg-secondary">
+                <h2 className='text-2xl md:text-5xl font-bold'><span className='text-accent'>Trusted</span> <span className="text-primary">Partners</span></h2>
                 <BrandCarousel />
             </div>
 
@@ -113,11 +116,13 @@ const Home = () => {
 
             <section className="confused w-full h-fit p-10">
                 <div className="content container flex md:flex-row-reverse flex-col items-center justify-around bg-radial-[at_25%_55%] p-10 rounded-4xl  from-primary to-orange-100 via-orange-200 backdrop-blur-3xl">
-                    <div className="img hidden md:block"><img src={callCar} alt="" className='h-90 w-110 aspect-4/3' /></div>
+                    <div className="img w-full md:w-1/4 h-full">
+                        <Lottie animationData={supportGif} />
+                    </div>
                     <div className="text-content space-y-4">
-                        <h2 className="text-5xl font-bold text-secondary">Still Confused!</h2>
-                        <p className="text-black text-xl">Call us right now</p>
-                        <button className="btn btn-primary">Call Now <FaPhone /></button>
+                        <h2 className="text-2xl md:text-5xl font-bold text-secondary">Still Confused!</h2>
+                        <p className="text-black text-sm md:text-xl">Call us right now</p>
+                        <button className="btn btn-primary">Get Support <FaPhone /></button>
                     </div>
                 </div>
             </section>
