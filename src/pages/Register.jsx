@@ -15,7 +15,20 @@ const Register = () => {
     const [passwordShow, setPasswordShow] = useState(false)
 
     const handleGoogleSignIn = () => {
-        signInWithGoogle().then(() => {  setLoading(false); navigate('/') }).catch(err => toast.error(err.message))
+        signInWithGoogle().then((result) => {
+            setLoading(false);
+            fetch('https://rent-wheel-server.vercel.app/user', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ name: result.user.displayName, email: result.user.email })
+
+            })
+                .then(result => result.json())
+                .then((data) => data.insertedId && toast.success('Successfully signed in'))
+                .catch(err => toast.error(err.message));
+            navigate('/')
+        })
+            .catch(err => toast.error(err.message))
     }
     const handleRegister = (e) => {
         e.preventDefault();
@@ -29,7 +42,7 @@ const Register = () => {
             toast.error('Follow Proper Password Pattern')
             return
         }
-       setRegistrationLoading(true)
+        setRegistrationLoading(true)
         userRegistration(email, password)
             .then(data => {
                 setUser({ ...data.user, displayName: name, photoURL: photo })
@@ -54,11 +67,11 @@ const Register = () => {
 
                             })
                             .catch(err => toast.error(err.message))
-                            .finally(()=> setRegistrationLoading(false))
+                            .finally(() => setRegistrationLoading(false))
 
                     })
                     .catch(err => toast.error((err.message)))
-            }).catch(err => toast.error(err.message)).finally(()=> setRegistrationLoading(false))
+            }).catch(err => toast.error(err.message)).finally(() => setRegistrationLoading(false))
 
     }
     const handlePasswordShow = () => {
@@ -69,7 +82,7 @@ const Register = () => {
         <div className='relative'>
             <title>Register - Rent WHeel</title>
             {
-                registrationLoading && <div className='fixed top-0 right-0 w-full z-50'><LoadingAnimation/> </div>
+                registrationLoading && <div className='fixed top-0 right-0 w-full z-50'><LoadingAnimation /> </div>
             }
             <div className="hero bg-linear-to-bl from-orange-100 to-white p-15">
                 <div className="hero-content flex-col">

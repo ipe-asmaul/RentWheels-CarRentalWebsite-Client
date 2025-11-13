@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Context } from './AuthContext';
 import { auth } from '../firebase/firebase.config';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut,updateProfile } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
@@ -14,7 +15,7 @@ const AuthProvider = ({children}) => {
             .then(data => {
                 setAllData(data)
             })
-            .catch(err => console.log(err));
+            .catch(err => toast.error(err.message));
     }, []);
 
     const signInWithGoogle  = () =>{

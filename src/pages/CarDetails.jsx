@@ -12,6 +12,8 @@ import { CgBlock } from "react-icons/cg";
 import { Context } from '../auth/AuthContext';
 import Swal from 'sweetalert2';
 import LoadingAnimation from '../components/LoadingAnimation';
+import { toast } from 'react-toastify';
+import LoadingDaisySpinner from '../components/LoadingDaisySpinner';
 
 
 
@@ -46,7 +48,10 @@ const CarDetails = () => {
           })
           .then(result => result.json())
           .then(info => 
-            {console.log(info);
+            { 
+                if(info.message){
+                    return toast.error(info.message)
+                }
              setData(prev => ({...prev, isBooked: true}))
              setBookingLoading(false);
                Swal.fire({
@@ -55,7 +60,8 @@ const CarDetails = () => {
                         text: "Successfully Booked Your Drive!",
                     });
           })
-          .catch(err => console.log(err))
+          .catch(err => toast.error(err.message))
+          .finally(()=> setBookingLoading(false))
     }
     return (
         <>
@@ -67,7 +73,7 @@ const CarDetails = () => {
                 </div>
             }
             {
-       !loading &&
+       !loading ?
             
             <div className="details-content">
                 <div className="header-details flex flex-col md:flex-row w-full gap-20">
@@ -113,7 +119,7 @@ const CarDetails = () => {
                                 <p className='text-md text-black flex items-center gap-2 opacity-85'><MdAlternateEmail/> {data.email}</p>
                             </div>
                            </div>
-                           <button className="btn btn-primary w-fit text-secondary" onClick={handleBookNow} disabled={data.isBooked}>Book Now <FiPlus/></button>
+                           <button className="btn btn-primary w-fit text-secondary" onClick={handleBookNow} disabled={data.isBooked}>{data.isBooked? 'Booked' : `Book Now`}{data.isBooked? '' : <FiPlus/>} </button>
                            
                         </div>
                     </div>
@@ -123,6 +129,7 @@ const CarDetails = () => {
                         <p className="text-gray-700 text-xl">{data.description}</p>
                      </div>
                 </div> 
+                : <LoadingDaisySpinner/>
 }
 
             </div>

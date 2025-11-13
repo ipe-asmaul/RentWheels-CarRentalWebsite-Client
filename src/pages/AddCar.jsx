@@ -60,19 +60,19 @@ const AddCar = () => {
 
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Car Name</legend>
-                            <input type="name" className="input w-full" placeholder="Enter Car Name" name='name' />
+                            <input type="name" className="input w-full" placeholder="Enter Car Name" name='name' required/>
                         </fieldset>
                     </div>
                     <div className="description">
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Car Description</legend>
-                            <textarea className="textarea h-24" placeholder="Description" name='description'></textarea>
+                            <textarea className="textarea h-24" placeholder="Description" name='description' required></textarea>
                         </fieldset>
                     </div>
                     <div className="category">
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend">Category</legend>
-                            <select defaultValue="Pick a browser" className="select" name='category'>
+                            <select defaultValue="Pick a browser" className="select" name='category' required>
                                 <option disabled={true}>Pick a Car Model</option>
                                 <option>Sedan</option>
                                 <option>SUV</option>
@@ -86,13 +86,13 @@ const AddCar = () => {
                         <div className="rent-per-day">
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Rent (per day)</legend>
-                                <input type="number" className="input" placeholder="Rent" name='rent' />
+                                <input type="number" className="input" placeholder="Rent" name='rent' required/>
                             </fieldset>
                         </div>
                         <div className="location">
                             <fieldset className="fieldset">
                                 <legend className="fieldset-legend">Location</legend>
-                                <input type="text" className="input" placeholder="Add Your Location" name='location' />
+                                <input type="text" className="input" placeholder="Add Your Location" name='location' required/>
                             </fieldset>
                         </div>
                     </div>
@@ -115,6 +115,7 @@ const AddCar = () => {
                                 required
                                 placeholder="Enter Image Url"
                                 name='url'
+                                
 
                             />
                         </label>

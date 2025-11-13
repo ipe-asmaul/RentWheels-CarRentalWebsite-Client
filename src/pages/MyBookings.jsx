@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../auth/AuthContext';
 import LoadingAnimation from '../components/LoadingAnimation';
 import { toast } from 'react-toastify';
-import LoaderSpinner from '../components/LoaderSpinner';
+import LoadingDaisySpinner from '../components/LoadingDaisySpinner';
 
 const MyBookings = () => {
     const { user,loading } = useContext(Context);
@@ -32,7 +32,7 @@ const MyBookings = () => {
                 : 
                 bookingLoading ? 
                 
-                    <LoaderSpinner/>
+                    <LoadingDaisySpinner/>
                 
                 :
             <div className="my-listing pt-8">
@@ -50,8 +50,11 @@ const MyBookings = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                                
+
+                                
                                 {
-                                    data.map((item,index) => {
+                                    data.length ? data.map((item,index) => {
                                         return (
                                             <tr className="hover:bg-base-100" key={item._id}>
                                                 <th>{(index + 1)}</th>
@@ -61,6 +64,7 @@ const MyBookings = () => {
                                             </tr>
                                         )
                                     })
+                                    : <tr className='text-gray-600 text-xl m-10'><td>You haven't booked any car</td></tr>
                                 }
                             </tbody>
                         </table>

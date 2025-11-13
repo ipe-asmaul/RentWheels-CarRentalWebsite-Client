@@ -16,6 +16,7 @@ import LoadingAnimation from '../components/LoadingAnimation';
 import TopCard from '../components/TopCard';
 import Lottie from 'lottie-react';
 import supportGif from '../assets/support.json'
+import { toast } from 'react-toastify';
 
 
 
@@ -34,7 +35,7 @@ const Home = () => {
             .then(data => {
                 setTopData(data)
             })
-            .catch(err => console.log(err));
+            .catch(err => toast.error(err.message));
     
     }, [])
     return (
@@ -63,7 +64,7 @@ const Home = () => {
 
 
             <div className="why-to-choose-us bg-linear-to-tl from-accent to-white p-8 mt-10 backdrop-blur-3xl">
-                <div className="content-body container flex flex-col justify-center items-center gap-8">
+                <div className="content-body container mx-auto flex flex-col justify-center items-center gap-8">
                     <div className="h2 text-3xl font-bold text-secondary"><span className='text-primary'>Why</span> Rent <span className='text-primary'>With</span> Us</div>
                     <div className="cards flex flex-col md:flex-row items-center text-center justify-between gap-5">
                         <div className="rent-car-card flex flex-col gap-3 items-center w-full md:w-1/3 hover:shadow-2xl p-3 hover:rounded-xl transition">
@@ -103,7 +104,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className="all-reviews w-full mt-25">
+            <section className="all-reviews w-full mt-25 container mx-auto">
                 <h1 className="text-4xl font-bold text-secondary text-center">Testimonials</h1>
 
 
@@ -115,7 +116,7 @@ const Home = () => {
             </section>
 
             <section className="confused w-full h-fit p-10">
-                <div className="content container flex md:flex-row-reverse flex-col items-center justify-around bg-radial-[at_25%_55%] p-10 rounded-4xl  from-primary to-orange-100 via-orange-200 backdrop-blur-3xl">
+                <div className="content container mx-auto flex md:flex-row-reverse flex-col items-center justify-around bg-radial-[at_25%_55%] p-10 rounded-4xl  from-primary to-orange-100 via-orange-200 backdrop-blur-3xl">
                     <div className="img w-full md:w-1/4 h-full">
                         <Lottie animationData={supportGif} />
                     </div>

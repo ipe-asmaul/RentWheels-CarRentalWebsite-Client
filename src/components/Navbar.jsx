@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router';
 import { Context } from '../auth/AuthContext';
 import { Links } from 'react-router';
 import LoadingAnimation from './LoadingAnimation';
+import { toast } from 'react-toastify';
 
 
 const Navbar = () => {
@@ -48,7 +49,7 @@ const Navbar = () => {
     }
 
     const handleLogOut = () => {
-        logOut().then(() => console.log('Logged Out')).catch(err => console.log(err))
+        logOut().then(() => toast.success('Logged Out')).catch(err => toast.error(err))
     }
     return (
         <div>

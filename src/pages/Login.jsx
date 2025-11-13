@@ -26,7 +26,7 @@ const Login = () => {
 
             })
                 .then(result => result.json())
-                .then(() => toast.success('Successfully signed in'))
+                .then((data) => data.insertedId && toast.success('Successfully signed in'))
                 .catch(err => toast.error(err.message));
             navigate(destination)
 

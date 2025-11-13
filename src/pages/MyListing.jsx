@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Context } from '../auth/AuthContext';
 import LoadingAnimation from '../components/LoadingAnimation';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import LoadingDaisySpinner from '../components/LoadingDaisySpinner';
 
 const MyListing = () => {
     const { user } = useContext(Context);
@@ -12,22 +14,22 @@ const MyListing = () => {
     const [modalLoading, setModalLoading] = useState(true)
     useEffect(() => {
         setIsDataLoaded(true)
-        fetch(`https://rent-wheel-server.vercel.app/listings?email=${user?.email}`,{
+        fetch(`https://rent-wheel-server.vercel.app/listings?email=${user?.email}`, {
             headers: {
                 authorization: `Bearer ${user.accessToken}`
             }
-            })
+        })
             .then(result => result.json())
             .then(info => { setData(info); setIsDataLoaded(false) })
-            .catch(err => console.log(err));
+            .catch(err => toast.error(err.message));
 
     }, [user])
     useEffect(() => {
         updateId && fetch(`https://rent-wheel-server.vercel.app/car/${updateId}`)
             .then(result => result.json())
             .then(info => { setSingleData(info); setModalLoading(false) })
-            .catch(err => console.log(err))
-            .finally(()=> setModalLoading(false))
+            .catch(err => toast.error(err.message))
+            .finally(() => setModalLoading(false))
     }, [updateId])
     // console.log(data)
     const modal_update = useRef(null)
@@ -35,8 +37,7 @@ const MyListing = () => {
         setModalLoading(true)
         modal_update.current.showModal();
         setUpdateId(id)
-        console.log(updateId)
-        console.log(singleData)
+
 
 
     }
@@ -53,10 +54,11 @@ const MyListing = () => {
         const category = e.target.category.value;
         const carObj = { id, carName, description, rent, location, photo, category }
 
-        fetch('https://rent-wheel-server.vercel.app/updatecar', {
+        fetch(`https://rent-wheel-server.vercel.app/updatecar?email=${user?.email}`, {
             method: 'PATCH',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${user?.accessToken}`
             },
             body: JSON.stringify(carObj)
         })
@@ -68,15 +70,14 @@ const MyListing = () => {
                         title: "Updated",
                         text: "Successfully inserted data to database!",
                     });
-                    console.log(info);
                     modal_update.current.close()
                     // const newData = data.filter(item => item._id !== id)
                     setData(prev => prev.map(car => car._id == id ? { ...car, ...carObj } : car))
                     setSingleData({ ...singleData, ...carObj })
-
+                    setUpdateId(null)
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => toast.error(err.message))
             .finally(() => setModalLoading(false));
 
 
@@ -86,24 +87,29 @@ const MyListing = () => {
             title: "Do you want to delete this car?",
             showDenyButton: true,
             confirmButtonText: "Delete",
-           
+
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                fetch(`https://rent-wheel-server.vercel.app/deletecar?id=${id}`, {
-                    method: "DELETE"
-                })
-                .then(result => result.json())
-                .then(result => {
-                    console.log(result);
-                    if(result.deletedCount){
-                    setData(prev => prev.filter(item => item._id !== id))
-                    Swal.fire("Deleted!", "", "success");
+                setIsDataLoaded(true)
+                fetch(`https://rent-wheel-server.vercel.app/deletecar?id=${id}&email=${user?.email}`, {
+                    method: "DELETE",
+                    headers: {
+                        authorization: `Bearer ${user?.accessToken}`
                     }
-
                 })
-                .catch(err => console.log(err))
-                
+                    .then(result => result.json())
+                    .then(result => {
+                        if (result.deletedCount) {
+                            setData(prev => prev.filter(item => item._id !== id));
+                            setIsDataLoaded(false)
+                            Swal.fire("Deleted!", "", "success");
+                        }
+
+                    })
+                    .catch(err => toast.err(err.message))
+                    .finally(() => setIsDataLoaded(false))
+
             } else if (result.isDenied) {
                 return;
             }
@@ -112,7 +118,7 @@ const MyListing = () => {
     return (
         <div className='bg-linear-to-bl from-accent to-white h-full'>
             <title>Added Cars - Rent Wheel</title>
-            
+
             {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
             <dialog id="my_modal_5" ref={modal_update} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
@@ -187,12 +193,56 @@ const MyListing = () => {
                                         <p className="validator-hint">Must be valid URL</p>
 
                                     </div>
+                                    <div className="user-info space-y-1.5">
+                                        <p className='text-sm'>Personal Info</p>
+
+                                        <div className="email">
+                                            <label className="input validator">
+                                                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                    <g
+                                                        strokeLinejoin="round"
+                                                        strokeLinecap="round"
+                                                        strokeWidth="2.5"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                                    </g>
+                                                </svg>
+                                                <input type="email" defaultValue={user?.email} required readOnly />
+                                            </label>
+                                        </div>
+                                        <div className="name">
+                                            <label className="input validator">
+                                                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                    <g
+                                                        strokeLinejoin="round"
+                                                        strokeLinecap="round"
+                                                        strokeWidth="2.5"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                                        <circle cx="12" cy="7" r="4"></circle>
+                                                    </g>
+                                                </svg>
+                                                <input
+                                                    type="text"
+                                                    defaultValue={user?.displayName}
+                                                    readOnly
+                                                />
+                                            </label>
+
+
+                                        </div>
+                                    </div>
                                     <input type="submit" value="Update" className='btn btn-secondary' />
                                 </form>
                                 <div className="modal-action">
                                     <form method="dialog">
                                         {/* if there is a button in form, it will close the modal */}
-                                        <button className="btn" onClick={()=> setModalLoading(false)}>Close</button>
+                                        <button className="btn" onClick={() => { setModalLoading(false); setUpdateId(null) }}>Close</button>
                                     </form>
 
 
@@ -206,6 +256,7 @@ const MyListing = () => {
                 </div>
 
             </dialog>
+
 
             {
                 !isDataLoaded ?
@@ -228,7 +279,7 @@ const MyListing = () => {
                                     <tbody>
 
                                         {
-                                            data.map((item, index) => {
+                                            data.length ? data.map((item, index) => {
                                                 return (
 
                                                     <tr key={item?._id}>
@@ -245,6 +296,7 @@ const MyListing = () => {
                                                     </tr>)
 
                                             })
+                                                : <tr className='text-gray-600 text-xl m-10'><td>You haven't added any car</td></tr>
                                         }
 
 
@@ -255,7 +307,7 @@ const MyListing = () => {
                         </div>
                     </div>
                     :
-                    <LoadingAnimation />
+                    <LoadingDaisySpinner />
 
             }
         </div>

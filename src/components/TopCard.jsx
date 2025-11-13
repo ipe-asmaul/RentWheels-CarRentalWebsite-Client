@@ -16,8 +16,7 @@ const TopCard = ({car}) => {
             </div>
             <Tooltip id='top-tool-tip' style={{ padding: 0, backgroundColor: '#F97316' }}>
                 <div className="tool-tips-content bg-linear-to-tl from-orange-700 to-orange-300 px-3 py-1 rounded-md text-center">
-                    <p>Price: ${car.rent}</p>
-                    <p>{car.isBooked ? "Booked" : "Available"}</p>
+                    <p>Rent: ${car.rent}</p>
                 </div>
             </Tooltip>
         </div>

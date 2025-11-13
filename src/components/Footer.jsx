@@ -10,7 +10,7 @@ import { IoLogoPinterest } from "react-icons/io";
 
 const Footer = () => {
     return (
-        <div>
+        <div className='bg-secondary w-full'>
             <footer className="footer container mx-auto sm:footer-horizontal bg-secondary text-white p-10">
                 <aside>
                     <p className='flex text-2xl'> <span className='text-primary mr-2'>Rent</span> Wh<span className='flex color-accent'><GiCarWheel /><GiCarWheel /></span>L </p>
