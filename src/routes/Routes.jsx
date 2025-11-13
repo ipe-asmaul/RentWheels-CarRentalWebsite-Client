@@ -9,7 +9,6 @@ import MyListing from "../pages/MyListing";
 import MyBookings from "../pages/MyBookings";
 import AllCars from "../pages/AllCars";
 import CarDetails from "../pages/CarDetails";
-import App from "../App";
 import LoadingAnimation from "../components/LoadingAnimation";
 import PrivateRoute from "../private-routes/PrivateRoute";
 
@@ -67,10 +66,6 @@ const routes = createBrowserRouter([
       }
 
     ]
-  },
-  {
-    path: '/test',
-    Component: App
   },
   {
     path: '*',
